@@ -326,9 +326,8 @@ void PointCloudToLaserScanNode::cloudCallback(PointCloud2::ConstSharedPtr cloud_
       pcl_pointcloud.push_back(point);
     }
   }
-  PointCloud2 pointcloud_output;
-  pcl::toROSMsg(pcl_pointcloud, pointcloud_output);
-  auto pointcloud_output_ptr = std::make_unique<PointCloud2>(pointcloud_output);
+  auto pointcloud_output_ptr = std::make_unique<PointCloud2>();
+  pcl::toROSMsg(pcl_pointcloud, *pointcloud_output_ptr);
   pointcloud_output_ptr->header = cloud_msg->header;
   pointcloud_pub_->publish(std::move(pointcloud_output_ptr));
 
